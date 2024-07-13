@@ -11,6 +11,8 @@
 
     <modules>
         <module>spring-data-mapping</module>
+        <module>spring-security-oauth2</module>
+        <module>spring-web-thymeleaf</module>
     </modules>
 
 </project>

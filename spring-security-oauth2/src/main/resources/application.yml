@@ -1,0 +1,16 @@
+spring:
+  application:
+    name: spring-security-oauth2
+  security:
+    oauth2:
+      client:
+        registration:
+          github:
+            client-id: Ov23lilqRJxAaY7JStNn
+            client-secret: 8273062c70c6895514fa98bcab23ebdfc1c63acb
+          google:
+            client-id: 682287404410-1rkqacmkilmfhc7n0tb211a361ma3tif.apps.googleusercontent.com
+            client-secret: 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
+
+
+logging.level.org.springframework.security: TRACE
