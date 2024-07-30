@@ -1,14 +1,13 @@
 package com.cwa.springwebthymeleaf.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+
+import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
-import jakarta.validation.constraints.Size;
 import lombok.Data;
+
+import java.time.Year;
 
 @Entity
 @Data
@@ -18,14 +17,20 @@ public class Product {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @NotBlank(message = "Name is mandatory")
-    @Size(min = 3, message = "Name must be at least 3 characters long")
-    private String name;
+    @Enumerated(EnumType.STRING)
+    @NotNull(message = "Product Type can not be null")
+    private ProductType productType;
 
-    @NotBlank(message = "Description is mandatory")
-    private String description;
+    @NotBlank(message = "Brand can not be null")
+    private String brand;
 
-    @NotNull(message = "Price is mandatory")
-    @Positive(message = "Price must be positive")
+    @NotBlank(message = "Model can not be null")
+    private String model;
+
+    @NotNull(message = "Price can not be null")
+    @Positive
     private Double price;
+
+    @NotNull(message = "Year can not be null")
+    private Year year;
 }

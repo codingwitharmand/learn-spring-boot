@@ -1,6 +1,7 @@
 package com.cwa.springwebthymeleaf.controller;
 
 import com.cwa.springwebthymeleaf.model.Product;
+import com.cwa.springwebthymeleaf.model.ProductType;
 import com.cwa.springwebthymeleaf.repository.ProductRepository;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -17,7 +18,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 public class ProductController {
 
     private final ProductRepository productRepository;
-    public static final String REDIRECT_HOME = "redirect:/";
 
     @GetMapping("/")
     public String index(Model model) {
@@ -28,37 +28,41 @@ public class ProductController {
     @GetMapping("/product/new")
     public String newProduct(Model model) {
         model.addAttribute("product", new Product());
+        model.addAttribute("types", ProductType.values());
         return "newProduct";
     }
 
-    @PostMapping("/product/new")
-    public String saveProduct(@Valid @ModelAttribute("product") Product product, BindingResult bindingResult) {
+    @PostMapping("/product")
+    public String saveProduct(@Valid @ModelAttribute("product") Product product, BindingResult bindingResult, Model model) {
         if (bindingResult.hasErrors()) {
+            model.addAttribute("types", ProductType.values());
             return "newProduct";
         }
         productRepository.save(product);
-        return REDIRECT_HOME;
+        return "redirect:/";
     }
 
     @GetMapping("/product/edit/{id}")
     public String editProduct(@PathVariable Long id, Model model) {
         Product product = productRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("Invalid product id: " + id));
         model.addAttribute("product", product);
+        model.addAttribute("types", ProductType.values());
         return "editProduct";
     }
 
-    @PostMapping("/product/edit/{id}")
-    public String updateProduct(@PathVariable Long id, @Valid @ModelAttribute("product") Product product, BindingResult bindingResult) {
+    @PostMapping("/product/{id}")
+    public String updateProduct(@PathVariable Long id, @Valid @ModelAttribute("product") Product product, BindingResult bindingResult, Model model) {
         if (bindingResult.hasErrors()) {
+            model.addAttribute("types", ProductType.values());
             return "editProduct";
         }
         productRepository.save(product);
-        return REDIRECT_HOME;
+        return "redirect:/";
     }
 
     @GetMapping("/product/delete/{id}")
-    public String deleteProduct(@PathVariable Long id) {
+    public String deleteProduct(@PathVariable Long id, Model model) {
         productRepository.deleteById(id);
-        return REDIRECT_HOME;
+        return "redirect:/";
     }
 }
