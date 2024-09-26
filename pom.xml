@@ -14,6 +14,7 @@
         <module>spring-security-oauth2</module>
         <module>spring-web-thymeleaf</module>
         <module>spring-security-keycloak</module>
+        <module>spring-boot-docker</module>
     </modules>
 
 </project>
